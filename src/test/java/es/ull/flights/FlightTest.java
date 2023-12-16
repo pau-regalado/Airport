@@ -8,7 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class FlightTest {
     Flight flight;
@@ -37,5 +37,37 @@ public class FlightTest {
                 () -> Assertions.assertEquals("AH001", flight.getFlightNumber()),
                 () -> Assertions.assertEquals(0, flight.getNumberOfPassengers())
         );
+    }
+    @Test
+    void addAndRemoveMultiplePassengers() {
+        Flight flight = new Flight("AB123", 3);
+        Passenger passenger1 = new Passenger("3", "Pedro", "LK");
+        Passenger passenger2 = new Passenger("4", "Alba", "LK");
+        Passenger passenger3 = new Passenger("5", "Mario", "LK");
+
+        assertTrue(flight.addPassenger(passenger1));
+        assertTrue(flight.addPassenger(passenger2));
+        assertTrue(flight.addPassenger(passenger3));
+
+        assertEquals(3, flight.getNumberOfPassengers());
+
+        assertTrue(flight.removePassenger(passenger1));
+        assertTrue(flight.removePassenger(passenger2));
+
+        assertEquals(1, flight.getNumberOfPassengers());
+    }
+
+    @Test
+    void addPassengerWithNullFlight() {
+        Flight flight = new Flight("AB123", 0);
+        Passenger passenger = new Passenger("6", "John", "LK");
+        passenger.setFlight(null);
+
+        RuntimeException exception = assertThrows(
+                RuntimeException.class,
+                () -> flight.addPassenger(passenger)
+        );
+
+        assertEquals("Not enough seats for flight AB123", exception.getMessage());
     }
 }
