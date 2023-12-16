@@ -20,8 +20,6 @@
  */
 package es.ull.passengers;
 
-
-
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.regex.Matcher;
@@ -31,12 +29,22 @@ import es.ull.flights.Flight;
 
 public class Passenger {
 
+    // Fields to store passenger information
     private String identifier;
     private String name;
     private String countryCode;
     private Flight flight;
 
+    /**
+     * Constructor for the Passenger class.
+     *
+     * @param identifier  The identifier for the passenger.
+     * @param name        The name of the passenger.
+     * @param countryCode The country code of the passenger.
+     * @throws RuntimeException If the provided country code is invalid.
+     */
     public Passenger(String identifier, String name, String countryCode) {
+        // Validate the country code
         if (!Arrays.asList(Locale.getISOCountries()).contains(countryCode)) {
             throw new RuntimeException("Invalid country code");
         }
@@ -46,30 +54,59 @@ public class Passenger {
         this.countryCode = countryCode;
     }
 
+    /**
+     * Get the identifier of the passenger.
+     *
+     * @return The identifier.
+     */
     public String getIdentifier() {
         return identifier;
     }
 
+    /**
+     * Get the name of the passenger.
+     *
+     * @return The name.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Get the country code of the passenger.
+     *
+     * @return The country code.
+     */
     public String getCountryCode() {
         return countryCode;
     }
 
+    /**
+     * Get the flight associated with the passenger.
+     *
+     * @return The associated flight.
+     */
     public Flight getFlight() {
         return flight;
     }
 
+    /**
+     * Join a flight by setting the associated flight for the passenger.
+     *
+     * @param flight The flight to join.
+     * @throws RuntimeException If the passenger cannot be removed from the previous flight or added to the new flight.
+     */
     public void joinFlight(Flight flight) {
         Flight previousFlight = this.flight;
+        // Remove the passenger from the previous flight
         if (null != previousFlight) {
             if (!previousFlight.removePassenger(this)) {
                 throw new RuntimeException("Cannot remove passenger");
             }
         }
+        // Set the passenger's flight to the new flight
         setFlight(flight);
+        // Add the passenger to the new flight
         if (null != flight) {
             if (!flight.addPassenger(this)) {
                 throw new RuntimeException("Cannot add passenger");
@@ -77,12 +114,23 @@ public class Passenger {
         }
     }
 
+    /**
+     * Set the associated flight for the passenger.
+     *
+     * @param flight The flight to set.
+     */
     public void setFlight(Flight flight) {
         this.flight = flight;
     }
 
+    /**
+     * Override the toString method to provide a custom string representation of the passenger.
+     *
+     * @return A string representation of the passenger.
+     */
     @Override
     public String toString() {
         return "Passenger " + getName() + " with identifier: " + getIdentifier() + " from " + getCountryCode();
     }
 }
+

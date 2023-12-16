@@ -11,17 +11,21 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class FlightTest {
+
+    // Se crean instancias de Flight y Passenger para usar en las pruebas
     Flight flight;
     Passenger passenger1;
     Passenger passenger2;
 
+    // Configuración inicial antes de cada prueba
     @BeforeEach
     void setUp() {
         passenger1 = new Passenger("1", "Manuel", "ES");
-        passenger2 =  new Passenger("2", "Pedro", "LK");
+        passenger2 = new Passenger("2", "Pedro", "LK");
         flight = new Flight("AH001", 30);
     }
 
+    // Prueba para verificar la creación exitosa de un vuelo válido
     @Test
     @DisplayName("Create valid flight")
     void createValidFlight() {
@@ -30,6 +34,7 @@ public class FlightTest {
         //Assertions.assertEquals(0, flight.getNumberOfPassengers());
     }
 
+    // Prueba para verificar que los getters de la clase Flight funcionan correctamente
     @Test
     @DisplayName("Getters of the flight class should work")
     void groupGettersAssertions() {
@@ -38,6 +43,8 @@ public class FlightTest {
                 () -> Assertions.assertEquals(0, flight.getNumberOfPassengers())
         );
     }
+
+    // Prueba para verificar la adición y eliminación exitosa de múltiples pasajeros
     @Test
     void addAndRemoveMultiplePassengers() {
         Flight flight = new Flight("AB123", 3);
@@ -57,6 +64,7 @@ public class FlightTest {
         assertEquals(1, flight.getNumberOfPassengers());
     }
 
+    // Prueba para verificar la excepción al intentar agregar un pasajero con vuelo nulo
     @Test
     void addPassengerWithNullFlight() {
         Flight flight = new Flight("AB123", 0);
