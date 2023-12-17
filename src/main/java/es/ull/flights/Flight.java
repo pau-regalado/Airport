@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import es.ull.passengers.Passenger;
-
+/** \file */
 // Define a custom exception for invalid flight numbers
 class InvalidFlightNumberException extends RuntimeException {
     public InvalidFlightNumberException(String message) {
